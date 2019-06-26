@@ -1,0 +1,21 @@
+diff -urN ruamel.ordereddict-0.4.13.orig/ordereddict.h ruamel.ordereddict-0.4.13/ordereddict.h
+--- ruamel.ordereddict-0.4.13.orig/ordereddict.h	2019-01-23 12:20:30.055676600 +0800
++++ ruamel.ordereddict-0.4.13/ordereddict.h	2019-01-23 12:20:59.367353100 +0800
+@@ -4,7 +4,7 @@
+ extern "C" {
+ #endif
+ 
+-#if defined _MSC_VER || defined __CYGWIN__
++#if defined _WIN32 || defined __CYGWIN__
+ #undef PyAPI_FUNC
+ #undef PyAPI_DATA
+ #define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE
+@@ -61,7 +61,7 @@
+ */
+ 
+ #if PY_VERSION_HEX < 0x02050000
+-#ifdef _MSC_VER
++#ifdef _WIN32
+ 	typedef int Py_ssize_t;
+ #else
+ typedef ssize_t			Py_ssize_t;

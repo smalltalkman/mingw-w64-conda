@@ -1,0 +1,110 @@
+# Maintainer: gym603 <gui_yuan_miao@163.com>
+
+_realname=conda
+pkgbase=mingw-w64-python-${_realname}
+pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
+pkgver=4.6.1
+pkgrel=1
+pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
+arch=('any')
+url="https://github.com/conda/conda"
+license=('BSD-3-Clause')
+_archive=${_realname}-${pkgver}
+source=(${_archive}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz)
+sha256sums=('98EBDA0D5CB2FFEFE83EA42CDB2873E460C9380736DC1A0179A72C1490CDC3C8')
+
+_deps=('pycosat' 'requests' 'menuinst' 'ruamel.yaml')
+_deps2=('enum34' 'futures')
+makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
+
+prepare() {
+  cd "${srcdir}/${_archive}"
+  echo ${pkgver} > conda/.version
+}
+
+build() {
+  cd "${srcdir}"
+  rm -rf python{2,3}-build
+  for builddir in python{2,3}-build; do
+    msg2 "Building for ${CARCH} ${builddir%-build} ..."
+    cp -r ${_archive} ${builddir}
+    pushd $builddir
+    ${MINGW_PREFIX}/bin/${builddir%-build} setup.py --quiet build
+    popd
+  done
+}
+
+package_python3-conda() {
+  depends=("${MINGW_PACKAGE_PREFIX}-python3" "${_deps[@]/#/${MINGW_PACKAGE_PREFIX}-python3-}" "${_deps3[@]/#/${MINGW_PACKAGE_PREFIX}-python3-}")
+
+  local _mingw_prefix=$(cygpath -am ${MINGW_PREFIX})
+
+  cd "${srcdir}/python3-build"
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+    ${MINGW_PREFIX}/bin/python3 setup.py --quiet install --prefix=${MINGW_PREFIX} --root="${pkgdir}" -O1
+
+  local PREFIX_WIN=$(cygpath -wm ${MINGW_PREFIX})
+  # fix python command in files
+  for _f in "${pkgdir}${MINGW_PREFIX}"/bin/*.py; do
+    sed -e "s|/usr/bin/env |${MINGW_PREFIX}|g" \
+        -e "s|${PREFIX_WIN}|${MINGW_PREFIX}|g" -i ${_f}
+  done
+
+  for f in conda ; do
+    mv "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,3}.exe
+    if [ -f "${pkgdir}${MINGW_PREFIX}"/bin/${f}.exe.manifest ]; then
+      mv "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,3}.exe.manifest
+      sed -e "s|${f}|${f}3|g" -i "${pkgdir}${MINGW_PREFIX}"/bin/${f}3.exe.manifest
+    fi
+    mv "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,3}-script.py
+  done
+
+  install -Dm644 LICENSE.txt "${pkgdir}${MINGW_PREFIX}/share/licenses/python3-${_realname}/LICENSE"
+}
+
+package_python2-conda() {
+  depends=("${MINGW_PACKAGE_PREFIX}-python2" "${_deps[@]/#/${MINGW_PACKAGE_PREFIX}-python2-}" "${_deps2[@]/#/${MINGW_PACKAGE_PREFIX}-python2-}")
+
+  cd "${srcdir}/python2-build"
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+    ${MINGW_PREFIX}/bin/python2 setup.py --quiet install --prefix=${MINGW_PREFIX} --root="${pkgdir}" -O1
+
+  local PREFIX_WIN=$(cygpath -wm ${MINGW_PREFIX})
+  # fix python command in files
+  for _f in "${pkgdir}${MINGW_PREFIX}"/bin/*.py; do
+    sed -e "s|/usr/bin/env |${MINGW_PREFIX}|g" \
+        -e "s|${PREFIX_WIN}|${MINGW_PREFIX}|g" -i ${_f}
+  done
+
+  for f in conda ; do
+    cp "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,2}.exe
+    if [ -f "${pkgdir}${MINGW_PREFIX}"/bin/${f}.exe.manifest ]; then
+      cp "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,2}.exe.manifest
+      sed -e "s|${f}|${f}2|g" -i "${pkgdir}${MINGW_PREFIX}"/bin/${f}2.exe.manifest
+    fi
+    cp "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,2}-script.py
+  done
+
+  install -Dm644 LICENSE.txt "${pkgdir}${MINGW_PREFIX}/share/licenses/python2-${_realname}/LICENSE"
+}
+
+package_mingw-w64-i686-python2-conda() {
+  install=${CARCH}-python2-${_realname}.install
+  package_python2-conda
+}
+
+package_mingw-w64-i686-python3-conda() {
+  install=${CARCH}-python3-${_realname}.install
+  package_python3-conda
+}
+
+package_mingw-w64-x86_64-python2-conda() {
+  install=${CARCH}-python2-${_realname}.install
+  package_python2-conda
+}
+
+package_mingw-w64-x86_64-python3-conda() {
+  install=${CARCH}-python3-${_realname}.install
+  package_python3-conda
+}

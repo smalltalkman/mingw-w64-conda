@@ -1,0 +1,11 @@
+--- menuinst-1.4.11.orig/menuinst/winshortcut.cpp	2019-01-22 21:17:22.825328000 +0800
++++ menuinst-1.4.11/menuinst/winshortcut.cpp	2019-01-22 21:17:41.138375400 +0800
+@@ -181,7 +181,7 @@
+     return PyModule_Create(&winshortcutmodule);
+ }
+ #else
+-void initwinshortcut(void)
++PyMODINIT_FUNC initwinshortcut(void)
+ {
+     Py_InitModule("winshortcut", meth);
+ }

@@ -1,0 +1,48 @@
+# Maintainer: gym603 <gui_yuan_miao@163.com>
+
+_realname=ruamel.ordereddict
+pkgbase=mingw-w64-python2-${_realname}
+pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}")
+pkgver=0.4.13
+pkgrel=1
+pkgdesc="Implementation of an ordered dictionary with Key Insertion Order, Key Value Insertion Order (mingw-w64)"
+arch=('any')
+url="https://bitbucket.org/ruamel/ordereddict"
+license=('MIT')
+depends=("${MINGW_PACKAGE_PREFIX}-python2")
+makedepends=("patch"
+             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
+_dtoken="b1/8f/3b1b407ff387e006a4a33e62182b212077bed41676451d60327955a50c3c"
+_archive=${_realname}-${pkgver}
+source=(${_archive}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_archive}.tar.gz
+        0001-change-_MSC_VER-to-_WIN32.patch)
+sha256sums=('BF0A198C8CE5D973C24E5DBA12D3ABC254996788CA6AD8448EABC6AA710DB149'
+            'F79E55350F3FEC0C9401691C2BDE80F84A88E620531ECFD3FCFE00C35BC68E69')
+
+# Helper macros to help make tasks easier #
+apply_patch_with_msg() {
+  for _patch in "$@"
+  do
+    msg2 "Applying ${_patch}"
+    patch -b -p1 -i "${srcdir}/${_patch}"
+  done
+}
+
+prepare() {
+  cd "${srcdir}/${_archive}"
+  apply_patch_with_msg \
+    0001-change-_MSC_VER-to-_WIN32.patch
+}
+
+build() {
+  cd "${srcdir}/${_archive}"
+  ${MINGW_PREFIX}/bin/python2 setup.py --quiet build
+}
+
+package() {
+  cd "${srcdir}/${_archive}"
+  MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
+    ${MINGW_PREFIX}/bin/python2 setup.py --quiet install --prefix=${MINGW_PREFIX} --root="${pkgdir}" -O1
+
+  #install -Dm644 LICENSE "${pkgdir}${MINGW_PREFIX}/share/licenses/python2-${_realname}/LICENSE"
+}
