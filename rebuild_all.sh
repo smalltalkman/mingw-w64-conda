@@ -20,7 +20,9 @@ function rebuild_all() {
 
 rebuild_all \
   mingw-w64-python2-ruamel.ordereddict \
+  \
   mingw-w64-python-ruamel.yaml \
   mingw-w64-python-pycosat \
   mingw-w64-python-menuinst \
+  \
   mingw-w64-python-conda \
