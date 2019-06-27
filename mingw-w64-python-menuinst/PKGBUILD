@@ -3,7 +3,7 @@
 _realname=menuinst
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=1.4.11
+pkgver=1.4.16
 pkgrel=1
 pkgdesc="Cross platform menu item installation (mingw-w64)"
 arch=('any')
@@ -12,7 +12,7 @@ license=('BSD 3-clause')
 _archive=${_realname}-${pkgver}
 source=(${_archive}.tar.gz::https://github.com/ContinuumIO/menuinst/archive/${pkgver}.tar.gz
         0001-fix-initwinshortcut-function-prototype.patch)
-sha256sums=('F3BE8F1351264781B0CA909399778EFF90D98E3650BD5345117E22135803D735'
+sha256sums=('C9AD6E225C2831656BAC35B71AC1C8C3F82F08BA8DA9718DFB3708485BBCCC44'
             'A8421660BCE42498ACCC876DAA1CE051028955EE10567BEB5ABC7EDB54CD3CA1')
 
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
