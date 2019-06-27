@@ -9,8 +9,9 @@ pkgdesc="A very intuitive and useful adapter to libarchive for universal archive
 arch=('any')
 url="https://github.com/dsoprea/PyEasyArchive"
 license=('GPL-2.0')
+_dtoken="b8/89/2952eefad82d9361f539de16ea85a2d98a7fb68eae2ba9ab0869aa2cee0f"
 _archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://github.com/dsoprea/PyEasyArchive/archive/${pkgver}.tar.gz
+source=(${_archive}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_archive}.tar.gz
         0001-fix-setup.py.patch)
 sha256sums=('37E8CCA1EB85D30583CDCFFC58116D83ABC09BE7549D5D6C9EAD563C0A8D7B04'
             'F0D61AE16E096FEBAACFB68C5CBA7DA846D7B7CC1D7CE9AE69DCC2603D2A4F14')
