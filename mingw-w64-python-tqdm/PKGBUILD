@@ -10,7 +10,7 @@ arch=('any')
 url="https://github.com/tqdm/tqdm"
 license=('custom')
 _archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://github.com/tqdm/tqdm/archive/${pkgver}.tar.gz)
+source=(${_archive}.tar.gz::https://github.com/tqdm/tqdm/archive/v${pkgver}.tar.gz)
 sha256sums=('51A50B0B2EDD5A06E1145A9C0745EC289C6DB09EF34CF398A4F0C6C21F004F3F')
 
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
