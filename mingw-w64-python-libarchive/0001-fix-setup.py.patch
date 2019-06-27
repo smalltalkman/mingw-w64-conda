@@ -1,0 +1,12 @@
+diff -urN -x '*.orig' libarchive-0.4.6.orig/setup.py libarchive-0.4.6/setup.py
+--- libarchive-0.4.6.orig/setup.py	2018-05-16 03:08:34.000000000 +0800
++++ libarchive-0.4.6/setup.py	2019-06-27 16:28:48.163185700 +0800
+@@ -14,7 +14,7 @@
+ 
+ class _custom_install(setuptools.command.install.install):
+     def run(self):
+-        _pre_install()
++        # _pre_install()
+         setuptools.command.install.install.run(self)
+ 
+ import libarchive

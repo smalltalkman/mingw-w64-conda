@@ -1,26 +1,23 @@
 # Maintainer: gym603 <gui_yuan_miao@163.com>
 
-_realname=conda
+_realname=tqdm
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=4.7.5
+pkgver=4.32.2
 pkgrel=1
-pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
+pkgdesc="A Fast, Extensible Progress Bar for Python and CLI (mingw-w64)"
 arch=('any')
-url="https://github.com/conda/conda"
-license=('BSD-3-Clause')
+url="https://github.com/tqdm/tqdm"
+license=('custom')
 _archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz)
-sha256sums=('DF364D8973CFF1A2262D72E9D0446BF3023C175BDED69C97244F35D5DCAC20D1')
+source=(${_archive}.tar.gz::https://github.com/tqdm/tqdm/archive/${pkgver}.tar.gz)
+sha256sums=('51A50B0B2EDD5A06E1145A9C0745EC289C6DB09EF34CF398A4F0C6C21F004F3F')
 
-_deps=('pycosat' 'requests' 'menuinst' 'ruamel.yaml' 'conda-package-handling' 'libarchive' 'tqdm')
-_deps2=('enum34' 'futures')
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 
 prepare() {
   cd "${srcdir}/${_archive}"
-  echo ${pkgver} > conda/.version
 }
 
 build() {
@@ -35,7 +32,7 @@ build() {
   done
 }
 
-package_python3-conda() {
+package_python3-tqdm() {
   depends=("${MINGW_PACKAGE_PREFIX}-python3" "${_deps[@]/#/${MINGW_PACKAGE_PREFIX}-python3-}" "${_deps3[@]/#/${MINGW_PACKAGE_PREFIX}-python3-}")
 
   local _mingw_prefix=$(cygpath -am ${MINGW_PREFIX})
@@ -51,7 +48,7 @@ package_python3-conda() {
         -e "s|${PREFIX_WIN}|${MINGW_PREFIX}|g" -i ${_f}
   done
 
-  for f in conda ; do
+  for f in tqdm ; do
     mv "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,3}.exe
     if [ -f "${pkgdir}${MINGW_PREFIX}"/bin/${f}.exe.manifest ]; then
       mv "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,3}.exe.manifest
@@ -60,10 +57,10 @@ package_python3-conda() {
     mv "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,3}-script.py
   done
 
-  install -Dm644 LICENSE.txt "${pkgdir}${MINGW_PREFIX}/share/licenses/python3-${_realname}/LICENSE"
+  # install -Dm644 LICENSE "${pkgdir}${MINGW_PREFIX}/share/licenses/python3-${_realname}/LICENSE"
 }
 
-package_python2-conda() {
+package_python2-tqdm() {
   depends=("${MINGW_PACKAGE_PREFIX}-python2" "${_deps[@]/#/${MINGW_PACKAGE_PREFIX}-python2-}" "${_deps2[@]/#/${MINGW_PACKAGE_PREFIX}-python2-}")
 
   cd "${srcdir}/python2-build"
@@ -77,7 +74,7 @@ package_python2-conda() {
         -e "s|${PREFIX_WIN}|${MINGW_PREFIX}|g" -i ${_f}
   done
 
-  for f in conda ; do
+  for f in tqdm ; do
     cp "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,2}.exe
     if [ -f "${pkgdir}${MINGW_PREFIX}"/bin/${f}.exe.manifest ]; then
       cp "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,2}.exe.manifest
@@ -86,25 +83,25 @@ package_python2-conda() {
     cp "${pkgdir}${MINGW_PREFIX}"/bin/${f}{,2}-script.py
   done
 
-  install -Dm644 LICENSE.txt "${pkgdir}${MINGW_PREFIX}/share/licenses/python2-${_realname}/LICENSE"
+  # install -Dm644 LICENSE "${pkgdir}${MINGW_PREFIX}/share/licenses/python2-${_realname}/LICENSE"
 }
 
-package_mingw-w64-i686-python2-conda() {
+package_mingw-w64-i686-python2-tqdm() {
   install=${CARCH}-python2-${_realname}.install
-  package_python2-conda
+  package_python2-tqdm
 }
 
-package_mingw-w64-i686-python3-conda() {
+package_mingw-w64-i686-python3-tqdm() {
   install=${CARCH}-python3-${_realname}.install
-  package_python3-conda
+  package_python3-tqdm
 }
 
-package_mingw-w64-x86_64-python2-conda() {
+package_mingw-w64-x86_64-python2-tqdm() {
   install=${CARCH}-python2-${_realname}.install
-  package_python2-conda
+  package_python2-tqdm
 }
 
-package_mingw-w64-x86_64-python3-conda() {
+package_mingw-w64-x86_64-python3-tqdm() {
   install=${CARCH}-python3-${_realname}.install
-  package_python3-conda
+  package_python3-tqdm
 }
