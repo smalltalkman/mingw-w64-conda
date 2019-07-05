@@ -3,17 +3,17 @@
 _realname=libarchive
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=0.4.6
+pkgver=0.4.7
 pkgrel=1
 pkgdesc="A very intuitive and useful adapter to libarchive for universal archive access (mingw-w64)"
 arch=('any')
 url="https://github.com/dsoprea/PyEasyArchive"
 license=('GPL-2.0')
-_dtoken="b8/89/2952eefad82d9361f539de16ea85a2d98a7fb68eae2ba9ab0869aa2cee0f"
+_dtoken="bf/d4/26f5c9835d4d648e4f22b5fb91288457698e928aaf9d4ab7eff405b7ef03"
 _archive=${_realname}-${pkgver}
 source=(${_archive}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_archive}.tar.gz
         0001-fix-setup.py.patch)
-sha256sums=('37E8CCA1EB85D30583CDCFFC58116D83ABC09BE7549D5D6C9EAD563C0A8D7B04'
+sha256sums=('829dc298a08877f62335d528973bc034f7c1e8a03c16bfc1fa561e164e76a365'
             'F0D61AE16E096FEBAACFB68C5CBA7DA846D7B7CC1D7CE9AE69DCC2603D2A4F14')
 
 _deps=('nose')
