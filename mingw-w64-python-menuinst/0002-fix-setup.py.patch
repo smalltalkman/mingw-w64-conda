@@ -1,0 +1,12 @@
+diff -urN menuinst-1.4.16.orig/setup.py menuinst-1.4.16/setup.py
+--- menuinst-1.4.16.orig/setup.py	2019-07-05 15:39:01.543487100 +0800
++++ menuinst-1.4.16/setup.py	2019-07-05 15:41:07.051665800 +0800
+@@ -2,7 +2,7 @@
+ # Copyright (c) 2013 Continuum Analytics, Inc.
+ # All rights reserved.
+ import sys
+-from distutils.core import Extension, setup
++from setuptools import Extension, setup
+ 
+ import versioneer
+ 

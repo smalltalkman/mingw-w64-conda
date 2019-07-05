@@ -11,9 +11,11 @@ url="https://github.com/ContinuumIO/menuinst"
 license=('BSD 3-clause')
 _archive=${_realname}-${pkgver}
 source=(${_archive}.tar.gz::https://github.com/ContinuumIO/menuinst/archive/${pkgver}.tar.gz
-        0001-fix-initwinshortcut-function-prototype.patch)
-sha256sums=('C9AD6E225C2831656BAC35B71AC1C8C3F82F08BA8DA9718DFB3708485BBCCC44'
-            'A8421660BCE42498ACCC876DAA1CE051028955EE10567BEB5ABC7EDB54CD3CA1')
+        0001-fix-initwinshortcut-function-prototype.patch
+        0002-fix-setup.py.patch)
+sha256sums=('c9ad6e225c2831656bac35b71ac1c8c3f82f08ba8da9718dfb3708485bbccc44'
+            'a8421660bce42498accc876daa1ce051028955ee10567beb5abc7edb54cd3ca1'
+            'b34c3e43287edfc61de4c018bcc84d1cb3d3c1b8a108709c97228a54a933f515')
 
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
@@ -30,7 +32,8 @@ apply_patch_with_msg() {
 prepare() {
   cd "${srcdir}/${_archive}"
   apply_patch_with_msg \
-    0001-fix-initwinshortcut-function-prototype.patch
+    0001-fix-initwinshortcut-function-prototype.patch \
+    0002-fix-setup.py.patch
 }
 
 build() {
