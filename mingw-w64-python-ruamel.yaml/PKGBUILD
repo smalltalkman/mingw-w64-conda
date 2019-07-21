@@ -3,16 +3,16 @@
 _realname=ruamel.yaml
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=0.15.97
+pkgver=0.15.100
 pkgrel=1
 pkgdesc="YAML 1.2 loader/dumper package for Python (mingw-w64)"
 arch=('any')
 url="https://bitbucket.org/ruamel/yaml"
 license=('MIT')
-_dtoken="52/f4/7cf7a8bb5d0ddb4311d6503caa3a7505deada47b346b696ddf1aabbb9b3b"
+_dtoken="9a/ee/55cd64bbff971c181e2d9e1c13aba9a27fd4cd2bee545dbe90c44427c757"
 _archive=${_realname}-${pkgver}
 source=(${_archive}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_archive}.tar.gz)
-sha256sums=('17DBF6B7362E7AEE8494F7A0F5CFFD44902A6331FE89EF0853B855A7930AB845')
+sha256sums=('8e42f3067a59e819935a2926e247170ed93c8f0b2ab64526f888e026854db2e4')
 
 _deps2=('ruamel.ordereddict')
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"

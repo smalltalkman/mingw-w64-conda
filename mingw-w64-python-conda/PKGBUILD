@@ -3,7 +3,7 @@
 _realname=conda
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=4.7.5
+pkgver=4.7.10
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
 arch=('any')
@@ -11,7 +11,7 @@ url="https://github.com/conda/conda"
 license=('BSD-3-Clause')
 _archive=${_realname}-${pkgver}
 source=(${_archive}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz)
-sha256sums=('DF364D8973CFF1A2262D72E9D0446BF3023C175BDED69C97244F35D5DCAC20D1')
+sha256sums=('547441fbe62d5447488af886895a224b2bc0ffa7e71573c347fed145bdca65a2')
 
 _deps=('pycosat' 'requests' 'menuinst' 'ruamel.yaml' 'conda-package-handling' 'libarchive' 'tqdm')
 _deps2=('enum34' 'futures')
