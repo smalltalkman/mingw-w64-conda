@@ -10,8 +10,7 @@ arch=('any')
 url="https://github.com/dsoprea/PyEasyArchive"
 license=('GPL-2.0')
 _dtoken="bf/d4/26f5c9835d4d648e4f22b5fb91288457698e928aaf9d4ab7eff405b7ef03"
-_archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_archive}.tar.gz
+source=(${_realname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_realname}-${pkgver}.tar.gz
         0001-fix-setup.py.patch)
 sha256sums=('829dc298a08877f62335d528973bc034f7c1e8a03c16bfc1fa561e164e76a365'
             'F0D61AE16E096FEBAACFB68C5CBA7DA846D7B7CC1D7CE9AE69DCC2603D2A4F14')
@@ -30,10 +29,7 @@ apply_patch_with_msg() {
 }
 
 prepare() {
-  rm -rf "${srcdir}/${_archive}.orig"
-  cp -rp "${srcdir}/${_archive}" "${srcdir}/${_archive}.orig"
-
-  cd "${srcdir}/${_archive}"
+  cd "${srcdir}/${_realname}-${pkgver}"
   apply_patch_with_msg \
     0001-fix-setup.py.patch
 }
@@ -43,7 +39,7 @@ build() {
   rm -rf python{2,3}-build
   for builddir in python{2,3}-build; do
     msg2 "Building for ${CARCH} ${builddir%-build} ..."
-    cp -r ${_archive} ${builddir}
+    cp -r ${_realname}-${pkgver} ${builddir}
     pushd $builddir
     ${MINGW_PREFIX}/bin/${builddir%-build} setup.py --quiet build
     popd

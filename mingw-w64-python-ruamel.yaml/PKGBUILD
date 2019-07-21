@@ -10,8 +10,7 @@ arch=('any')
 url="https://bitbucket.org/ruamel/yaml"
 license=('MIT')
 _dtoken="9a/ee/55cd64bbff971c181e2d9e1c13aba9a27fd4cd2bee545dbe90c44427c757"
-_archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_archive}.tar.gz)
+source=(${_realname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_realname}-${pkgver}.tar.gz)
 sha256sums=('8e42f3067a59e819935a2926e247170ed93c8f0b2ab64526f888e026854db2e4')
 
 _deps2=('ruamel.ordereddict')
@@ -23,7 +22,7 @@ build() {
   rm -rf python{2,3}-build
   for builddir in python{2,3}-build; do
     msg2 "Building for ${CARCH} ${builddir%-build} ..."
-    cp -r ${_archive} ${builddir}
+    cp -r ${_realname}-${pkgver} ${builddir}
     pushd $builddir
     ${MINGW_PREFIX}/bin/${builddir%-build} setup.py --quiet build
     popd

@@ -9,8 +9,7 @@ pkgdesc="Python bindings to picosat (a SAT solver) (mingw-w64)"
 arch=('any')
 url="https://github.com/ContinuumIO/pycosat"
 license=('MIT')
-_archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://github.com/ContinuumIO/pycosat/archive/${pkgver}.tar.gz
+source=(${_realname}-${pkgver}.tar.gz::https://github.com/ContinuumIO/pycosat/archive/${pkgver}.tar.gz
         0001-define-macro-NGETRUSAGE.patch)
 sha256sums=('ABCAF3D6AFB332B0D8363590D0AAA81F00F71142900FBAE2608F7D595D5E4492'
             'EF15886EFE80FB8610FBACC59CA9AB57EEFA8F703C08551B676FC2A07136FA28')
@@ -28,7 +27,7 @@ apply_patch_with_msg() {
 }
 
 prepare() {
-  cd "${srcdir}/${_archive}"
+  cd "${srcdir}/${_realname}-${pkgver}"
   apply_patch_with_msg \
     0001-define-macro-NGETRUSAGE.patch
 }
@@ -38,7 +37,7 @@ build() {
   rm -rf python{2,3}-build
   for builddir in python{2,3}-build; do
     msg2 "Building for ${CARCH} ${builddir%-build} ..."
-    cp -r ${_archive} ${builddir}
+    cp -r ${_realname}-${pkgver} ${builddir}
     pushd $builddir
     ${MINGW_PREFIX}/bin/${builddir%-build} setup.py --quiet build
     popd

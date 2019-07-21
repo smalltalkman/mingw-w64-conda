@@ -9,15 +9,14 @@ pkgdesc="A Fast, Extensible Progress Bar for Python and CLI (mingw-w64)"
 arch=('any')
 url="https://github.com/tqdm/tqdm"
 license=('custom')
-_archive=${_realname}-${pkgver}
-source=(${_archive}.tar.gz::https://github.com/tqdm/tqdm/archive/v${pkgver}.tar.gz)
+source=(${_realname}-${pkgver}.tar.gz::https://github.com/tqdm/tqdm/archive/v${pkgver}.tar.gz)
 sha256sums=('51A50B0B2EDD5A06E1145A9C0745EC289C6DB09EF34CF398A4F0C6C21F004F3F')
 
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 
 prepare() {
-  cd "${srcdir}/${_archive}"
+  cd "${srcdir}/${_realname}-${pkgver}"
 }
 
 build() {
@@ -25,7 +24,7 @@ build() {
   rm -rf python{2,3}-build
   for builddir in python{2,3}-build; do
     msg2 "Building for ${CARCH} ${builddir%-build} ..."
-    cp -r ${_archive} ${builddir}
+    cp -r ${_realname}-${pkgver} ${builddir}
     pushd $builddir
     ${MINGW_PREFIX}/bin/${builddir%-build} setup.py --quiet build
     popd
