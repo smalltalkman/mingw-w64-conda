@@ -9,13 +9,13 @@ pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w
 arch=('any')
 url="https://github.com/conda/conda"
 license=('BSD-3-Clause')
+makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz)
 sha256sums=('547441fbe62d5447488af886895a224b2bc0ffa7e71573c347fed145bdca65a2')
 
 _deps=('pycosat' 'requests' 'menuinst' 'ruamel.yaml' 'conda-package-handling' 'libarchive' 'tqdm')
 _deps2=('enum34' 'futures')
-makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
-             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 
 prepare() {
   cd "${srcdir}/${_realname}-${pkgver}"

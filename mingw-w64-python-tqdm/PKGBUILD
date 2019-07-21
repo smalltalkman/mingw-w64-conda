@@ -9,11 +9,10 @@ pkgdesc="A Fast, Extensible Progress Bar for Python and CLI (mingw-w64)"
 arch=('any')
 url="https://github.com/tqdm/tqdm"
 license=('custom')
-source=(${_realname}-${pkgver}.tar.gz::https://github.com/tqdm/tqdm/archive/v${pkgver}.tar.gz)
-sha256sums=('51A50B0B2EDD5A06E1145A9C0745EC289C6DB09EF34CF398A4F0C6C21F004F3F')
-
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
+source=(${_realname}-${pkgver}.tar.gz::https://github.com/tqdm/tqdm/archive/v${pkgver}.tar.gz)
+sha256sums=('51A50B0B2EDD5A06E1145A9C0745EC289C6DB09EF34CF398A4F0C6C21F004F3F')
 
 prepare() {
   cd "${srcdir}/${_realname}-${pkgver}"

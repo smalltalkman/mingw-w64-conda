@@ -9,13 +9,13 @@ pkgdesc="Create and extract conda packages of various formats (mingw-w64)"
 arch=('any')
 url="https://github.com/conda/conda-package-handling"
 license=('BSD-3-Clause')
+makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda-package-handling/archive/${pkgver}.tar.gz)
 sha256sums=('738f573961c234595afdf9212fe090cb52372c3c87a9ff4f72e86328af12b9ba')
 
 _deps=('six')
 _deps2=('futures')
-makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
-             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 
 prepare() {
   cd "${srcdir}/${_realname}-${pkgver}"

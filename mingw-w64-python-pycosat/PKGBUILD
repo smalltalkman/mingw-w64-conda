@@ -9,13 +9,12 @@ pkgdesc="Python bindings to picosat (a SAT solver) (mingw-w64)"
 arch=('any')
 url="https://github.com/ContinuumIO/pycosat"
 license=('MIT')
+makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/ContinuumIO/pycosat/archive/${pkgver}.tar.gz
         0001-define-macro-NGETRUSAGE.patch)
 sha256sums=('ABCAF3D6AFB332B0D8363590D0AAA81F00F71142900FBAE2608F7D595D5E4492'
             'EF15886EFE80FB8610FBACC59CA9AB57EEFA8F703C08551B676FC2A07136FA28')
-
-makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
-             "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 
 # Helper macros to help make tasks easier #
 apply_patch_with_msg() {
