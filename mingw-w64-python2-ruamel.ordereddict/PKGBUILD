@@ -42,6 +42,4 @@ package() {
   cd "${srcdir}/${_realname}-${pkgver}"
   MSYS2_ARG_CONV_EXCL="--prefix=;--install-scripts=;--install-platlib=" \
     ${MINGW_PREFIX}/bin/python2 setup.py --quiet install --prefix=${MINGW_PREFIX} --root="${pkgdir}" -O1
-
-  #install -Dm644 LICENSE "${pkgdir}${MINGW_PREFIX}/share/licenses/python2-${_realname}/LICENSE"
 }
