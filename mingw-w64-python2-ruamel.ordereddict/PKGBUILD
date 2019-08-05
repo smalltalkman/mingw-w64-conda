@@ -3,7 +3,7 @@
 _realname=ruamel.ordereddict
 pkgbase=mingw-w64-python2-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}")
-pkgver=0.4.13
+pkgver=0.4.14
 pkgrel=1
 pkgdesc="Implementation of an ordered dictionary with Key Insertion Order, Key Value Insertion Order (mingw-w64)"
 arch=('any')
@@ -12,11 +12,11 @@ license=('MIT')
 depends=("${MINGW_PACKAGE_PREFIX}-python2")
 makedepends=("patch"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
-_dtoken="b1/8f/3b1b407ff387e006a4a33e62182b212077bed41676451d60327955a50c3c"
+_dtoken="7d/fd/522c4722347aaf01e6bc8cce486130d83c52c72d3c3c2bbe3cbb02dddd4d"
 source=(${_realname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_realname}-${pkgver}.tar.gz
         0001-change-_MSC_VER-to-_WIN32.patch)
-sha256sums=('BF0A198C8CE5D973C24E5DBA12D3ABC254996788CA6AD8448EABC6AA710DB149'
-            'F79E55350F3FEC0C9401691C2BDE80F84A88E620531ECFD3FCFE00C35BC68E69')
+sha256sums=('281051d26eb2b18ef3d920e1e260716a52bd058a6b1a2f324102fc6a15cb8d4a'
+            'f79e55350f3fec0c9401691c2bde80f84a88e620531ecfd3fcfe00c35bc68e69')
 
 # Helper macros to help make tasks easier #
 apply_patch_with_msg() {

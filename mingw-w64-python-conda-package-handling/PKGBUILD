@@ -3,7 +3,7 @@
 _realname=conda-package-handling
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=1.3.11
+pkgver=1.4.1
 pkgrel=1
 pkgdesc="Create and extract conda packages of various formats (mingw-w64)"
 arch=('any')
@@ -12,7 +12,7 @@ license=('BSD-3-Clause')
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda-package-handling/archive/${pkgver}.tar.gz)
-sha256sums=('738f573961c234595afdf9212fe090cb52372c3c87a9ff4f72e86328af12b9ba')
+sha256sums=('746eff3c6c4ad2825a11e3b5e1cd276c86662adec6bd29cb820fbda5c9807cc5')
 
 _deps=('six')
 _deps2=('futures')
