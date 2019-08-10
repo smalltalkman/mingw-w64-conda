@@ -13,8 +13,8 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/ContinuumIO/pycosat/archive/${pkgver}.tar.gz
         0001-define-macro-NGETRUSAGE.patch)
-sha256sums=('ABCAF3D6AFB332B0D8363590D0AAA81F00F71142900FBAE2608F7D595D5E4492'
-            'EF15886EFE80FB8610FBACC59CA9AB57EEFA8F703C08551B676FC2A07136FA28')
+sha256sums=('abcaf3d6afb332b0d8363590d0aaa81f00f71142900fbae2608f7d595d5e4492'
+            'ef15886efe80fb8610fbacc59ca9ab57eefa8f703c08551b676fc2a07136fa28')
 
 # Helper macros to help make tasks easier #
 apply_patch_with_msg() {

@@ -3,7 +3,7 @@
 _realname=tqdm
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=4.32.2
+pkgver=4.33.0
 pkgrel=1
 pkgdesc="A Fast, Extensible Progress Bar for Python and CLI (mingw-w64)"
 arch=('any')
@@ -12,7 +12,7 @@ license=('custom')
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/tqdm/tqdm/archive/v${pkgver}.tar.gz)
-sha256sums=('51A50B0B2EDD5A06E1145A9C0745EC289C6DB09EF34CF398A4F0C6C21F004F3F')
+sha256sums=('d496966b62045c8ec0461acb69a63280fc22dfb155ec39deb21f0ed19b77297c')
 
 prepare() {
   cd "${srcdir}/${_realname}-${pkgver}"

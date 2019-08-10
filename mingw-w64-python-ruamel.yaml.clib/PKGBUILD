@@ -3,7 +3,7 @@
 _realname=ruamel.yaml.clib
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=0.1.0
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="C based reader/scanner and emitter for ruamel.yaml (mingw-w64)"
 arch=('any')
@@ -11,9 +11,9 @@ url="https://bitbucket.org/ruamel/yaml.clib"
 license=('MIT')
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
-_dtoken="9f/05/dd28862df049dfb4586a47d705bb9bf022a6642c035784c911aa67e27f59"
+_dtoken="6a/6c/7b461053ce5be0d7c8b12dcae9a7c10e8012238a00f6fcd98643ee66d2de"
 source=(${_realname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_realname}-${pkgver}.tar.gz)
-sha256sums=('385b70734435d2f66f00823d4e224c1a4b53dfeaf9ded3a655a6a2f9c229b1f6')
+sha256sums=('cee86ecc893a6a8ecaa7c6a9c2d06f75f614176210d78a5f155f8e78d6989509')
 
 build() {
   cd "${srcdir}"

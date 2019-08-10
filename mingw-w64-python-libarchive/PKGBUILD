@@ -15,7 +15,7 @@ _dtoken="bf/d4/26f5c9835d4d648e4f22b5fb91288457698e928aaf9d4ab7eff405b7ef03"
 source=(${_realname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_realname}-${pkgver}.tar.gz
         0001-fix-setup.py.patch)
 sha256sums=('829dc298a08877f62335d528973bc034f7c1e8a03c16bfc1fa561e164e76a365'
-            'F0D61AE16E096FEBAACFB68C5CBA7DA846D7B7CC1D7CE9AE69DCC2603D2A4F14')
+            'f0d61ae16e096febaacfb68c5cba7da846d7b7cc1d7ce9ae69dcc2603d2a4f14')
 
 _deps=('nose')
 

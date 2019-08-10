@@ -3,7 +3,7 @@
 _realname=ruamel.yaml
 pkgbase=mingw-w64-python-${_realname}
 pkgname=("${MINGW_PACKAGE_PREFIX}-python2-${_realname}" "${MINGW_PACKAGE_PREFIX}-python3-${_realname}")
-pkgver=0.16.0
+pkgver=0.16.1
 pkgrel=1
 pkgdesc="YAML 1.2 loader/dumper package for Python (mingw-w64)"
 arch=('any')
@@ -11,9 +11,9 @@ url="https://bitbucket.org/ruamel/yaml"
 license=('MIT')
 makedepends=("${MINGW_PACKAGE_PREFIX}-python3-setuptools"
              "${MINGW_PACKAGE_PREFIX}-python2-setuptools")
-_dtoken="23/f0/45899a556e620591daa51eab9eed34dbc03a77449b4047414feaf0b117e2"
+_dtoken="fd/f4/0a9044336f9ae455749a9e1ce6a7c8d6a47551f7eeddb8e9ea574d25b75c"
 source=(${_realname}-${pkgver}.tar.gz::https://files.pythonhosted.org/packages/${_dtoken}/${_realname}-${pkgver}.tar.gz)
-sha256sums=('4c1dbad22790b5ea8587c2a0cae97ebc7a9d0d88de5d0edb70dea2eab7d8534a')
+sha256sums=('547aeab5c51c93bc750ed2a320c1559b605bde3aa569216aa75fd91d8a1c4623')
 
 _deps=('ruamel.yaml.clib')
 _deps2=('ruamel.ordereddict')
