@@ -25,6 +25,8 @@ function rebuild() {
      *.log \
      *.log.[0-9]*
 
+  updpkgsums
+
   makepkg-mingw --noconfirm -sLf
 
   local _pkg_files=$(find . -type f -name "*.pkg.tar.xz")
