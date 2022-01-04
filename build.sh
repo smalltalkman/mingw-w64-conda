@@ -22,6 +22,17 @@ function build() {
     x86_64) export MINGW_ARCH=mingw64 ;;
   esac
   makepkg-mingw --noconfirm -srLf
+  if [ ! -f "/home/custompkgs/custom.db.tar.gz" ]; then
+    mkdir -p /home/custompkgs
+    repo-add /home/custompkgs/custom.db.tar.gz
+    pacman -Sy
+  fi
+  local _pkg_files=$(find . -type f -name "mingw-w64-${machine}-*.pkg.tar.zst")
+  for _pkg_file in ${_pkg_files[@]}; do
+    cp $_pkg_file                              /home/custompkgs
+    repo-add /home/custompkgs/custom.db.tar.gz /home/custompkgs/$_pkg_file
+    pacman -Sy
+  done
 }
 
 function install() {
@@ -51,11 +62,12 @@ function do_execute() {
   case $1 in
     "-e") shift; execute    $@                     ;;
     "-d") shift; execute -d $@ clean build install ;;
+    "-b") shift; execute -d $@ clean build         ;;
     "-f") shift; local file=$1; shift;
       readarray -t dirs < $file
       for dir in ${dirs[@]}; do
         echo -e "\033[31m>>> (Re)Building $dir <<<\033[0m"
-        execute -d $dir $@ clean build install
+        execute -d $dir $@ clean build
       done
     ;;
     "-i") shift; local file=$1; shift;
