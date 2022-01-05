@@ -14,14 +14,19 @@ function clean() {
 }
 
 function build() {
-  pacman -S --asdeps --needed --noconfirm base
-  updpkgsums
-  pacman -S --asdeps --needed --noconfirm mingw-w64-${machine}-gcc
   case $machine in
-    i686)   export MINGW_ARCH=mingw32 ;;
-    x86_64) export MINGW_ARCH=mingw64 ;;
+    i686)   MINGW_ARCH=mingw32 ;;
+    x86_64) MINGW_ARCH=mingw64 ;;
   esac
-  makepkg-mingw --noconfirm -srLf
+
+  pacman -S --asdeps --needed --noconfirm base
+
+  MINGW_ARCH=${MINGW_ARCH} updpkgsums
+
+  pacman -S --asdeps --needed --noconfirm mingw-w64-${machine}-gcc
+
+  MINGW_ARCH=${MINGW_ARCH} makepkg-mingw --noconfirm -srLf
+
   if [ ! -f "/home/custompkgs/custom.db.tar.gz" ]; then
     mkdir -p /home/custompkgs
     repo-add /home/custompkgs/custom.db.tar.gz
