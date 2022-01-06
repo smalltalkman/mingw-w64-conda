@@ -1,0 +1,49 @@
+MINGW_INSTALL=mingw32
+
+## arg 1:  the new package version
+pre_install() {
+	/bin/true
+}
+
+## arg 1:  the new package version
+post_install() {
+	conda_init "${1%-*}"
+}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+pre_upgrade() {
+	conda_init_reverse "${2%-*}"
+}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+post_upgrade() {
+	conda_init "${1%-*}"
+}
+
+## arg 1:  the old package version
+pre_remove() {
+	conda_init_reverse "${1%-*}"
+}
+
+## arg 1:  the old package version
+post_remove() {
+	/bin/true
+}
+
+conda_init() {
+  /${MINGW_INSTALL}/bin/conda.exe init > /dev/null 2>&1
+}
+
+conda_init_reverse() {
+  /${MINGW_INSTALL}/bin/conda.exe init --reverse > /dev/null 2>&1
+
+  rm -f \
+    /${MINGW_INSTALL}/bin/{conda,conda-env,activate,deactivate} \
+    /${MINGW_INSTALL}/condabin/conda \
+    /${MINGW_INSTALL}/shell/condabin/{Conda.psm1,conda-hook.ps1} \
+    /${MINGW_INSTALL}/etc/profile.d/{conda.sh,conda.csh} \
+    /${MINGW_INSTALL}/etc/fish/conf.d/conda.fish \
+    /${MINGW_INSTALL}/lib/python3.9/site-packages/xontrib/conda.xsh
+}
