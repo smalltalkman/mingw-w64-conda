@@ -1,0 +1,17 @@
+# Maintainer: gym603 <gui_yuan_miao@163.com>
+
+_realname=conda
+pkgbase=mingw-w64-${_realname}
+pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
+pkgver=2022.01.04
+pkgrel=1
+pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
+arch=('any')
+url="https://github.com/conda/conda"
+license=('BSD-3-Clause')
+mingw_arch=('mingw32' 'mingw64')
+depends=("${MINGW_PACKAGE_PREFIX}-python-conda"
+         "${MINGW_PACKAGE_PREFIX}-python-conda-package-handling"
+         "${MINGW_PACKAGE_PREFIX}-python-tqdm")
+source=(README.md)
+sha256sums=('ef566580e7c65992c900f093888c39a1da4ade3987f853f407c53df8446a9df5')
