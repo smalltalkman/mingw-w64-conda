@@ -38,4 +38,8 @@
 
  > conda remove -n test --all
 
+ > conda-env --help
+ > conda-env list
+ > conda-env remove --name test
+
 ```
