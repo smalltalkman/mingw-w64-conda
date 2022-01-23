@@ -13,7 +13,8 @@ mingw_arch=('mingw32' 'mingw64')
 depends=("${MINGW_PACKAGE_PREFIX}-python"
          "${MINGW_PACKAGE_PREFIX}-python-pywin32")
 makedepends=("patch"
-             "${MINGW_PACKAGE_PREFIX}-python-setuptools")
+             "${MINGW_PACKAGE_PREFIX}-python-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-cc")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/menuinst/archive/${pkgver}.tar.gz
         0001-fix-initwinshortcut-function-prototype.patch
         0002-fix-setup.py.patch)

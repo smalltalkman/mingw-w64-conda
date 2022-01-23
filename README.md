@@ -4,7 +4,7 @@
 ```
  > ./build.sh -f build_order -32  
  > ./build.sh -f build_order -64  
- > pacman -Rs --noconfirm mingw-w64-{i686,x86_64}-gcc
+ > pacman -Rs --noconfirm mingw-w64-{i686,x86_64}-binutils
 ```
 
 ## Install/Uninstall conda

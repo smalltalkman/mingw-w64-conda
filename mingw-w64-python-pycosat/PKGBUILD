@@ -12,7 +12,8 @@ license=('MIT')
 mingw_arch=('mingw32' 'mingw64')
 depends=("${MINGW_PACKAGE_PREFIX}-python")
 makedepends=("patch"
-             "${MINGW_PACKAGE_PREFIX}-python-setuptools")
+             "${MINGW_PACKAGE_PREFIX}-python-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-cc")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/pycosat/archive/${pkgver}.tar.gz
         0001-define-macro-NGETRUSAGE.patch)
 sha256sums=('abcaf3d6afb332b0d8363590d0aaa81f00f71142900fbae2608f7d595d5e4492'

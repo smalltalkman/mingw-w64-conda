@@ -23,7 +23,7 @@ function build() {
 
   MINGW_ARCH=${MINGW_ARCH} updpkgsums
 
-  pacman -S --asdeps --needed --noconfirm mingw-w64-${machine}-gcc
+  pacman -S --asdeps --needed --noconfirm mingw-w64-${machine}-binutils
 
   MINGW_ARCH=${MINGW_ARCH} makepkg-mingw --noconfirm -srLf
 
