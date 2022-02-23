@@ -3,7 +3,7 @@
 _realname=conda-package-handling
 pkgbase=mingw-w64-python-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-python-${_realname}"
-pkgver=1.4.1
+pkgver=1.7.3
 pkgrel=1
 pkgdesc="Create and extract conda packages of various formats (mingw-w64)"
 arch=('any')
@@ -12,9 +12,36 @@ license=('BSD-3-Clause')
 mingw_arch=('mingw32' 'mingw64')
 depends=("${MINGW_PACKAGE_PREFIX}-python"
          "${MINGW_PACKAGE_PREFIX}-python-six")
-makedepends=("${MINGW_PACKAGE_PREFIX}-python-setuptools")
-source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda-package-handling/archive/${pkgver}.tar.gz)
-sha256sums=('746eff3c6c4ad2825a11e3b5e1cd276c86662adec6bd29cb820fbda5c9807cc5')
+makedepends=("patch"
+             "${MINGW_PACKAGE_PREFIX}-python-setuptools"
+             "${MINGW_PACKAGE_PREFIX}-cython"
+             "${MINGW_PACKAGE_PREFIX}-cc"
+             "${MINGW_PACKAGE_PREFIX}-libarchive")
+source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda-package-handling/archive/${pkgver}.tar.gz
+        0001-fix-setup.py.patch)
+sha256sums=('6c01527200c9d9de18e64d2006cc97f9813707a34f3cb55bca2852ff4b06fb8d'
+            'c9d529729d1aae26edd831fdbd93e78299707e37777886988e36ec32c6d8e767')
+
+# Helper macros to help make tasks easier #
+apply_patch_with_msg() {
+  for _patch in "$@"
+  do
+    msg2 "Applying ${_patch}"
+    patch -Nbp1 -i "${srcdir}/${_patch}"
+  done
+}
+
+prepare() {
+  rm -rf "${srcdir}/${_realname}-${pkgver}.orig"
+  cp -rp "${srcdir}/${_realname}-${pkgver}" "${srcdir}/${_realname}-${pkgver}.orig"
+
+  cd "${srcdir}/${_realname}-${pkgver}"
+  apply_patch_with_msg \
+    0001-fix-setup.py.patch
+
+  rm -rf "${srcdir}/${_realname}-${pkgver}.ptch"
+  cp -rp "${srcdir}/${_realname}-${pkgver}" "${srcdir}/${_realname}-${pkgver}.ptch"
+}
 
 build() {
   cd "${srcdir}/${_realname}-${pkgver}"
