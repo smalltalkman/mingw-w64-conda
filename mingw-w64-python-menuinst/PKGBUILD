@@ -3,7 +3,7 @@
 _realname=menuinst
 pkgbase=mingw-w64-python-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-python-${_realname}"
-pkgver=1.4.16
+pkgver=1.4.18
 pkgrel=1
 pkgdesc="Cross platform menu item installation (mingw-w64)"
 arch=('any')
@@ -18,7 +18,7 @@ makedepends=("patch"
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/menuinst/archive/${pkgver}.tar.gz
         0001-fix-initwinshortcut-function-prototype.patch
         0002-fix-setup.py.patch)
-sha256sums=('c9ad6e225c2831656bac35b71ac1c8c3f82f08ba8da9718dfb3708485bbccc44'
+sha256sums=('5518c15f4c31d6e7c305140274a7024a4518c417f5a7d66e26f291e740b0f089'
             'a8421660bce42498accc876daa1ce051028955ee10567beb5abc7edb54cd3ca1'
             'b34c3e43287edfc61de4c018bcc84d1cb3d3c1b8a108709c97228a54a933f515')
 
