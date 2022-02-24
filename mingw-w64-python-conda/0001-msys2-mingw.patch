@@ -1,16 +1,16 @@
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/base/context.py conda-4.7.11.ptch/conda/base/context.py
---- conda-4.7.11.orig/conda/base/context.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/base/context.py	2022-01-05 15:20:55.795000000 +0800
-@@ -24,7 +24,7 @@
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/base/context.py conda-4.11.0/conda/base/context.py
+--- conda-4.11.0.orig/conda/base/context.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/base/context.py	2022-02-24 02:47:20.972000000 +0800
+@@ -25,7 +25,7 @@
  from .._vendor.boltons.setutils import IndexedSet
  from .._vendor.frozendict import frozendict
  from .._vendor.toolz import concat, concatv, unique
 -from ..common.compat import NoneType, iteritems, itervalues, odict, on_win, string_types
 +from ..common.compat import NoneType, iteritems, itervalues, odict, on_win, on_unix_like, string_types
  from ..common.configuration import (Configuration, ConfigurationLoadError, MapParameter,
-                                     PrimitiveParameter, SequenceParameter, ValidationError)
- from ..common._os.linux import linux_get_libc_version
-@@ -72,14 +72,14 @@
+                                     ParameterLoader, PrimitiveParameter, SequenceParameter,
+                                     ValidationError)
+@@ -77,14 +77,14 @@
      if root_writable:
          fixed_dirs = (
              join(root_prefix, 'envs'),
@@ -28,7 +28,7 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/base/context.py conda-
          fixed_dirs += join(user_data_dir(APP_NAME, APP_NAME), 'envs'),
      return tuple(IndexedSet(expand(p) for p in concatv(_envs_dirs, fixed_dirs)))
  
-@@ -464,9 +464,9 @@
+@@ -518,9 +518,9 @@
              cache_dir_name = 'pkgs32' if context.force_32bit else 'pkgs'
              fixed_dirs = (
                  self.root_prefix,
@@ -40,7 +40,7 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/base/context.py conda-
                  fixed_dirs += user_data_dir(APP_NAME, APP_NAME),
              return tuple(IndexedSet(expand(join(p, cache_dir_name)) for p in (fixed_dirs)))
  
-@@ -531,8 +531,8 @@
+@@ -585,8 +585,8 @@
      @property
      # This is deprecated, please use conda_exe_vars_dict instead.
      def conda_exe(self):
@@ -51,7 +51,7 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/base/context.py conda-
          return join(self.conda_prefix, bin_dir, exe)
  
      @property
-@@ -550,8 +550,8 @@
+@@ -620,8 +620,8 @@
                                  ('_CE_CONDA', 'conda'),
                                  ('CONDA_PYTHON_EXE', sys.executable)])
          else:
@@ -62,9 +62,9 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/base/context.py conda-
              # I was going to use None to indicate a variable to unset, but that gets tricky with
              # error-on-undefined.
              return OrderedDict([('CONDA_EXE', os.path.join(sys.prefix, bin_dir, exe)),
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/cli/main_init.py conda-4.7.11.ptch/conda/cli/main_init.py
---- conda-4.7.11.orig/conda/cli/main_init.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/cli/main_init.py	2022-01-05 14:28:02.718000000 +0800
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/cli/main_init.py conda-4.11.0/conda/cli/main_init.py
+--- conda-4.11.0.orig/conda/cli/main_init.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/cli/main_init.py	2022-02-24 02:47:20.980000000 +0800
 @@ -6,7 +6,7 @@
  from logging import getLogger
  
@@ -83,10 +83,10 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/cli/main_init.py conda
  
      if args.dev:
          assert len(selected_shells) == 1, "--dev can only handle one shell at a time right now"
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/common/compat.py conda-4.7.11.ptch/conda/common/compat.py
---- conda-4.7.11.orig/conda/common/compat.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/common/compat.py	2022-01-05 14:28:02.724000000 +0800
-@@ -11,12 +11,15 @@
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/common/compat.py conda-4.11.0/conda/common/compat.py
+--- conda-4.11.0.orig/conda/common/compat.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/common/compat.py	2022-02-24 19:26:27.264400900 +0800
+@@ -11,6 +11,7 @@
  from itertools import chain
  from operator import methodcaller
  import sys
@@ -94,17 +94,18 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/common/compat.py conda
  from tempfile import mkdtemp
  import warnings as _warnings
  
- on_win = bool(sys.platform == "win32")
+@@ -18,6 +19,8 @@
  on_mac = bool(sys.platform == "darwin")
+ on_linux = bool(sys.platform == "linux")
  
 +on_unix_like = bool('mingw' in sysconfig.get_platform())
 +
  PY2 = sys.version_info[0] == 2
  PY3 = sys.version_info[0] == 3
  FILESYSTEM_ENCODING = sys.getfilesystemencoding()
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/common/path.py conda-4.7.11.ptch/conda/common/path.py
---- conda-4.7.11.orig/conda/common/path.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/common/path.py	2022-01-05 14:28:02.731000000 +0800
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/common/path.py conda-4.11.0/conda/common/path.py
+--- conda-4.11.0.orig/conda/common/path.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/common/path.py	2022-02-24 02:47:21.000000000 +0800
 @@ -10,7 +10,7 @@
  import re
  import subprocess
@@ -112,8 +113,8 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/common/path.py conda-4
 -from .compat import on_win, string_types
 +from .compat import on_win, on_unix_like, string_types
  from .. import CondaError
- from .._vendor.auxlib.decorators import memoize
- from .._vendor.toolz import accumulate, concat, take
+ from ..auxlib.decorators import memoize
+ from .._vendor.toolz import accumulate, concat
 @@ -161,7 +161,7 @@
  
  
@@ -132,7 +133,7 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/common/path.py conda-4
          return 'Lib/site-packages'
      else:
          py_ver = get_major_minor_version(python_version)
-@@ -194,11 +194,11 @@
+@@ -217,11 +217,11 @@
  
  
  def get_bin_directory_short_path():
@@ -146,10 +147,10 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/common/path.py conda-4
  
  
  def win_path_double_escape(path):
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/core/initialize.py conda-4.7.11.ptch/conda/core/initialize.py
---- conda-4.7.11.orig/conda/core/initialize.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/core/initialize.py	2022-01-05 15:42:05.281000000 +0800
-@@ -54,7 +54,7 @@
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/core/initialize.py conda-4.11.0/conda/core/initialize.py
+--- conda-4.11.0.orig/conda/core/initialize.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/core/initialize.py	2022-02-24 02:47:21.008000000 +0800
+@@ -55,7 +55,7 @@
                          PosixActivator, XonshActivator, PowerShellActivator)
  from ..base.context import context
  from ..common.compat import (PY2, ensure_binary, ensure_utf8_encoding,
@@ -184,7 +185,7 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/core/initialize.py con
      shells = set(shells)
      if shells & {'bash', 'zsh'}:
          if 'bash' in shells and for_user:
-@@ -741,7 +742,7 @@
+@@ -744,7 +745,7 @@
      else:
          original_ep_content = ""
  
@@ -193,7 +194,7 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/core/initialize.py con
          # no shebang needed on windows
          new_ep_content = ""
      else:
-@@ -1178,7 +1179,7 @@
+@@ -1181,7 +1182,7 @@
  
  
  def _bashrc_content(conda_prefix, shell):
@@ -202,39 +203,30 @@ diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/core/initialize.py con
          from ..activate import native_path_to_unix
          conda_exe = native_path_to_unix(join(conda_prefix, 'Scripts', 'conda.exe'))
          conda_initialize_content = dals("""
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/gateways/connection/download.py conda-4.7.11.ptch/conda/gateways/connection/download.py
---- conda-4.7.11.orig/conda/gateways/connection/download.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/gateways/connection/download.py	2022-01-05 14:28:02.745000000 +0800
-@@ -21,7 +21,7 @@
- from ..._vendor.auxlib.ish import dals
- from ..._vendor.auxlib.logz import stringify
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/gateways/connection/download.py conda-4.11.0/conda/gateways/connection/download.py
+--- conda-4.11.0.orig/conda/gateways/connection/download.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/gateways/connection/download.py	2022-02-24 02:47:21.017000000 +0800
+@@ -17,7 +17,7 @@
+ from ...auxlib.ish import dals
+ from ...auxlib.logz import stringify
  from ...base.context import context
 -from ...common.compat import text_type
 +from ...common.compat import (text_type, on_unix_like)
  from ...common.io import time_recorder
  from ...exceptions import (BasicClobberError, CondaDependencyError, CondaHTTPError,
                             ChecksumMismatchError, maybe_raise, ProxyError)
-@@ -76,7 +76,7 @@
- ):
-     if exists(target_full_path):
-         maybe_raise(BasicClobberError(target_full_path, url, context), context)
--    if sys.platform == 'win32':
-+    if sys.platform == 'win32' and not on_unix_like:
-         preload_openssl()
-     if not context.ssl_verify:
-         disable_ssl_verify_warning()
-diff -urN -x '*.orig' -x .version conda-4.7.11.orig/conda/gateways/subprocess.py conda-4.7.11.ptch/conda/gateways/subprocess.py
---- conda-4.7.11.orig/conda/gateways/subprocess.py	2019-08-07 03:23:55.000000000 +0800
-+++ conda-4.7.11.ptch/conda/gateways/subprocess.py	2022-01-05 14:28:02.750000000 +0800
-@@ -72,9 +72,9 @@
-     stdin = ensure_binary(stdin) if isinstance(stdin, string_types) else stdin
-     stdout, stderr = p.communicate(input=stdin)
-     if hasattr(stdout, "decode"):
+diff -urN -x '*.orig' -x '*.rej' -x .version conda-4.11.0.orig/conda/gateways/subprocess.py conda-4.11.0/conda/gateways/subprocess.py
+--- conda-4.11.0.orig/conda/gateways/subprocess.py	2021-11-23 00:23:00.000000000 +0800
++++ conda-4.11.0/conda/gateways/subprocess.py	2022-02-24 19:30:33.888001000 +0800
+@@ -52,9 +52,9 @@
+             log.warning('CONDA_TEST_SAVE_TEMPS :: retaining pip run_script {}'.format(
+                 script_caller))
+     if hasattr(stdout, 'decode'):
 -        stdout = stdout.decode('utf-8', errors='replace')
 +        stdout = stdout.decode('utf-8-sig', errors='replace')
-     if hasattr(stderr, "decode"):
+     if hasattr(stderr, 'decode'):
 -        stderr = stderr.decode('utf-8', errors='replace')
 +        stderr = stderr.decode('utf-8-sig', errors='replace')
-     rc = p.returncode
-     ACTIVE_SUBPROCESSES.remove(p)
-     if (raise_on_error and rc != 0) or log.isEnabledFor(TRACE):
+     return stdout, stderr, process.returncode
+ 
+ 

@@ -3,7 +3,7 @@
 _realname=conda
 pkgbase=mingw-w64-python-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-python-${_realname}"
-pkgver=4.7.11
+pkgver=4.11.0
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
 arch=('any')
@@ -20,8 +20,8 @@ makedepends=("patch"
 install=${_realname}-${MINGW_ARCH}.install
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz
         0001-msys2-mingw.patch)
-sha256sums=('de36c438d6eceeb2e9e728f41518dc9e360c886cb20728f2a70d85dcdf194d8e'
-            'aa72cb6ea53b268590e0d40e6412daa4c5976b8b807bbb3a824d2749b1dee9ec')
+sha256sums=('1843355ccb93afb05f2a307e1fc37403fb9976da799236eebc3adee1c716c5fc'
+            '79fd34a4f2128ff0c6851990b7083a85160d5143a6e8badf7e51d26a098ac37d')
 
 # Helper macros to help make tasks easier #
 apply_patch_with_msg() {
