@@ -14,10 +14,11 @@ depends=("${MINGW_PACKAGE_PREFIX}-python")
 makedepends=("patch"
              "${MINGW_PACKAGE_PREFIX}-python-setuptools"
              "${MINGW_PACKAGE_PREFIX}-cc")
+checkdepends=("${MINGW_PACKAGE_PREFIX}-python-nose")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/pycosat/archive/${pkgver}.tar.gz
         0001-define-macro-NGETRUSAGE.patch)
 sha256sums=('abcaf3d6afb332b0d8363590d0aaa81f00f71142900fbae2608f7d595d5e4492'
-            'ef15886efe80fb8610fbacc59ca9ab57eefa8f703c08551b676fc2a07136fa28')
+            '05d064d044038c209d2a303b53649b1f048e813bfceda1336215b26d611800dc')
 
 # Helper macros to help make tasks easier #
 apply_patch_with_msg() {
@@ -44,6 +45,16 @@ build() {
   cd "${srcdir}/${_realname}-${pkgver}"
 
   ${MINGW_PREFIX}/bin/python setup.py --quiet build
+}
+
+check() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+
+  local python_platform=$(python -c 'import sysconfig; print(sysconfig.get_platform())')
+  local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+  local python_path=$(cygpath -m "$PWD/build/lib.${python_platform}-${python_version}")
+  PYTHONPATH="$python_path;$PYTHONPATH" \
+  ${MINGW_PREFIX}/bin/nosetests || warning "Tests failed"
 }
 
 package() {

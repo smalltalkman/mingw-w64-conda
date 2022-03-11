@@ -1,11 +1,16 @@
---- pycosat-0.6.3.orig/setup.py	2019-01-22 20:28:31.698677100 +0800
-+++ pycosat-0.6.3/setup.py	2019-01-22 20:28:42.989322900 +0800
-@@ -12,7 +12,7 @@
- ext_kwds = dict(
-     name = "pycosat",
-     sources = ["pycosat.c"],
--    define_macros = []
-+    define_macros = [('NGETRUSAGE', 1)]
- )
+diff -urN -x '*.orig' -x build pycosat-0.6.3.orig/pycosat.c pycosat-0.6.3/pycosat.c
+--- pycosat-0.6.3.orig/pycosat.c	2017-10-31 08:02:20.000000000 +0800
++++ pycosat-0.6.3/pycosat.c	2022-03-11 14:35:18.898000000 +0800
+@@ -9,8 +9,11 @@
  
- if '--inplace' in sys.argv:
+ #include <Python.h>
+ 
+-#ifdef _MSC_VER
++#ifdef _WIN32
+ #define NGETRUSAGE
++#endif
++
++#ifdef _MSC_VER
+ #define inline __inline
+ #endif
+ 
