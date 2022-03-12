@@ -15,11 +15,10 @@ depends=("${MINGW_PACKAGE_PREFIX}-python"
 makedepends=("patch"
              "${MINGW_PACKAGE_PREFIX}-python-setuptools"
              "${MINGW_PACKAGE_PREFIX}-cc")
+checkdepends=("${MINGW_PACKAGE_PREFIX}-python-nose")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/menuinst/archive/${pkgver}.tar.gz
-        0001-fix-initwinshortcut-function-prototype.patch
         0002-fix-setup.py.patch)
 sha256sums=('5518c15f4c31d6e7c305140274a7024a4518c417f5a7d66e26f291e740b0f089'
-            'a8421660bce42498accc876daa1ce051028955ee10567beb5abc7edb54cd3ca1'
             'b34c3e43287edfc61de4c018bcc84d1cb3d3c1b8a108709c97228a54a933f515')
 
 # Helper macros to help make tasks easier #
@@ -37,7 +36,6 @@ prepare() {
 
   cd "${srcdir}/${_realname}-${pkgver}"
   apply_patch_with_msg \
-    0001-fix-initwinshortcut-function-prototype.patch \
     0002-fix-setup.py.patch
 
   rm -rf "${srcdir}/${_realname}-${pkgver}.ptch"
@@ -48,6 +46,16 @@ build() {
   cd "${srcdir}/${_realname}-${pkgver}"
 
   ${MINGW_PREFIX}/bin/python setup.py --quiet build
+}
+
+check() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+
+  local python_platform=$(python -c 'import sysconfig; print(sysconfig.get_platform())')
+  local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+  local python_path=$(cygpath -m "$PWD/build/lib.${python_platform}-${python_version}")
+  PYTHONPATH="$python_path;$PYTHONPATH" \
+  ${MINGW_PREFIX}/bin/nosetests || warning "Tests failed"
 }
 
 package() {
