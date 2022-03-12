@@ -3,7 +3,7 @@
 _realname=conda
 pkgbase=mingw-w64-python-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-python-${_realname}"
-pkgver=4.11.0
+pkgver=4.12.0
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
 arch=('any')
@@ -17,11 +17,12 @@ depends=("${MINGW_PACKAGE_PREFIX}-python"
          "${MINGW_PACKAGE_PREFIX}-python-ruamel-yaml")
 makedepends=("patch"
              "${MINGW_PACKAGE_PREFIX}-python-setuptools")
+checkdepends=("${MINGW_PACKAGE_PREFIX}-python-nose")
 install=${_realname}-${MINGW_ARCH}.install
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz
         0001-msys2-mingw.patch)
-sha256sums=('1843355ccb93afb05f2a307e1fc37403fb9976da799236eebc3adee1c716c5fc'
-            '79fd34a4f2128ff0c6851990b7083a85160d5143a6e8badf7e51d26a098ac37d')
+sha256sums=('c6607fee920aae5d96528669fc9e61b9beff6cf8c634d1d85bc6f409d5146b44'
+            'dd676256538f6864beb328ea58d7eafc651acb46c2c15cddbdf96038559e20a1')
 
 # Helper macros to help make tasks easier #
 apply_patch_with_msg() {
@@ -50,6 +51,16 @@ build() {
   cd "${srcdir}/${_realname}-${pkgver}"
 
   ${MINGW_PREFIX}/bin/python setup.py --quiet build
+}
+
+check() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+
+  local python_platform=$(python -c 'import sysconfig; print(sysconfig.get_platform())')
+  local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+  local python_path=$(cygpath -m "$PWD/build/lib.${python_platform}-${python_version}")
+  PYTHONPATH="$python_path;$PYTHONPATH" \
+  ${MINGW_PREFIX}/bin/nosetests || warning "Tests failed"
 }
 
 package() {
