@@ -1,6 +1,5 @@
-diff -urN -x '*.orig' -x .version conda-package-handling-1.7.3.orig/setup.py conda-package-handling-1.7.3.ptch/setup.py
---- conda-package-handling-1.7.3.orig/setup.py	2021-04-12 17:49:45.000000000 +0800
-+++ conda-package-handling-1.7.3.ptch/setup.py	2022-02-24 02:14:57.947000000 +0800
+--- conda-package-handling-1.8.1.orig/setup.py	2022-04-02 00:26:46.000000000 +0800
++++ conda-package-handling-1.8.1.ptch/setup.py	2022-04-22 21:18:21.289000000 +0800
 @@ -5,7 +5,7 @@
  from setuptools.extension import Extension
  from Cython.Build import cythonize
@@ -10,7 +9,7 @@ diff -urN -x '*.orig' -x .version conda-package-handling-1.7.3.orig/setup.py con
  if sys.platform == 'win32':
      _libraries.append('advapi32')
      _libraries.append('user32')
-@@ -30,7 +30,7 @@
+@@ -24,7 +24,7 @@
      author="Anaconda, Inc.",
      author_email='conda@anaconda.com',
      url='https://github.com/conda/conda-package-handling',
