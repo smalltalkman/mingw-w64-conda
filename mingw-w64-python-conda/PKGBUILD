@@ -3,7 +3,7 @@
 _realname=conda
 pkgbase=mingw-w64-python-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-python-${_realname}"
-pkgver=4.13.0
+pkgver=4.14.0
 pkgrel=1
 pkgdesc="OS-agnostic, system-level binary package manager and ecosystem (mingw-w64)"
 arch=('any')
@@ -21,7 +21,7 @@ checkdepends=("${MINGW_PACKAGE_PREFIX}-python-nose")
 install=${_realname}-${MINGW_ARCH}.install
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/conda/archive/${pkgver}.tar.gz
         0001-msys2-mingw.patch)
-sha256sums=('30c4cee48ef3acc4e2d802c05baee44f5385f55b0c23c547b0961c51e1d140d2'
+sha256sums=('9b9fa3e20a2bcdd30496fc886bdd28b102e3a87eb3cdb4659b0a7e4e9edd52a8'
             '47d082c831f13c9e1cc8172d1ec4b3ab6ec221eb6c1c2491371c28c0cc3310a4')
 
 # Helper macros to help make tasks easier #
