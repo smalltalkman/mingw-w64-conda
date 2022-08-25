@@ -3,7 +3,7 @@
 _realname=menuinst
 pkgbase=mingw-w64-python-${_realname}
 pkgname="${MINGW_PACKAGE_PREFIX}-python-${_realname}"
-pkgver=1.4.18
+pkgver=1.4.19
 pkgrel=1
 pkgdesc="Cross platform menu item installation (mingw-w64)"
 arch=('any')
@@ -18,7 +18,7 @@ makedepends=("patch"
 checkdepends=("${MINGW_PACKAGE_PREFIX}-python-nose")
 source=(${_realname}-${pkgver}.tar.gz::https://github.com/conda/menuinst/archive/${pkgver}.tar.gz
         0002-fix-setup.py.patch)
-sha256sums=('5518c15f4c31d6e7c305140274a7024a4518c417f5a7d66e26f291e740b0f089'
+sha256sums=('e8f28fabc0efb7880b5e9a500683fc02d38886bc9e61ea1a19c55434907a3f0a'
             'b34c3e43287edfc61de4c018bcc84d1cb3d3c1b8a108709c97228a54a933f515')
 
 # Helper macros to help make tasks easier #
